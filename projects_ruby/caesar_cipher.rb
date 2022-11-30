@@ -1,44 +1,36 @@
-test_string = "What a string!"
-
 def caesar_chipher(text, num)
   shifter = num.to_i
   return text if shifter == 0
-  alphabet = "abcdefghijklmnopqrstuvwxyz".split("")
+  alphabet = ('a'..'z').to_a
   
   
-  if shifter > 0
+  if shifter < 0
     alphabet.reverse! 
-    shifter = -shifter
-  end
-  
-  if shifter.abs > 26
-    shifter = -(shifter.abs % 26 )
-  else
-    shifter
+    shifter = shifter.abs
   end
 
   text_arr = text.split("")
 
-  chiphered_arr = text_arr.map do |letter|
+  chiphered_arr = text_arr.map do |char|
     
-    if letter.downcase !~ /[a-z]/
-      letter  
+    if char.downcase !~ /[a-z]/
+      char  
+    
     else
-      
-      if letter == letter.downcase
-        shift_factor = alphabet.index(letter) + shifter
+      if char == char.downcase
+        shift_factor = (alphabet.index(char) + shifter) % 26
         alphabet[shift_factor]
 
       else
-        shift_factor = alphabet.index(letter.downcase) + shifter
+        shift_factor = (alphabet.index(char.downcase) + shifter) % 26
         alphabet[shift_factor].upcase
       end
-    
     end
   end  
-  
   chiphered_text = chiphered_arr.join
-
 end
 
-puts caesar_chipher(test_string, "-26")
+#test_string = "What a string!"
+test_string = "Bmfy f xywnsl!"
+
+puts caesar_chipher(test_string, "-31")
